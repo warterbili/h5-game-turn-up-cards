@@ -1,0 +1,229 @@
+         /* 定义字体 */
+         @font-face {           
+            font-family: "蜘蛛";
+            src: url(../字体文件/恐怖蜘蛛.ttf) format("truetype");
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            /* 使用上面定义的字体 */
+            font-family: "蜘蛛", serif;
+            min-width: 100vw;
+            min-height: 100vh;
+        }
+
+        /* 整个背景的径向渐变，从中心向四周扩散 */
+        body {
+            margin: 0;
+            background: radial-gradient(#f15f66, #7e2625);
+        }
+
+        /* 游戏标题 */
+        .game-title {
+            color: #ebd409;
+               /* 文本排列方式 */
+            text-align: center;
+            font-size: 4em;
+            /* 字体粗细 */
+            font-weight: normal;
+            /* display: none; */
+        }
+        /* 游戏信息 */
+        .game-info {
+            color: #f0f3f8;
+            font-size: 3em;
+        }
+        /* 整个游戏界面使用Grid布局 */
+        .game-container {
+            display: grid;
+            /* 分成四列 */
+            grid-template-columns: repeat(8, auto);
+            /* 每个元素中心对齐 */
+            justify-content: center;
+            gap: 10px;
+            /* perspective: 800px; */
+        }
+        /* 游戏信息部分容器 */
+        .game-info-container {
+            /* 元素跨度 开始和结束位置*/
+            grid-column: 1 / -1;
+            /* display: flex; */
+            justify-content: space-between;
+            display: none;
+        }
+
+        /* 扑克牌样式，主要是定义宽和高 */
+        .card {
+            /* 相对布局 未脱离文本流 */
+            position: relative;
+            height: 175px;
+            width: 125px;
+        }
+
+        /* .card:hover .card-back{
+            transform: rotateY(-180deg);
+        }
+        .card:hover .card-front{
+            transform: rotateY(0);
+        } */
+
+        /* 不管牌的背面还是字面 */
+        .card-face {
+            /* 绝对布局 跟随父元素定位 */
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            /* felx布局下的子元素的排列方式 按中轴对齐 */
+            align-items: center;
+            /* 溢出部分不可见 */
+            overflow: hidden;
+            backface-visibility: hidden;/* 面向观察者的背面不可见 */
+            border-radius: 12px;
+            border-width: 1px;
+            border-style: solid;
+            font-size: 7em;
+            /* 定义了元素改变时的平滑过渡  当触发transform时平滑过渡 动画变化*/
+            transition: transform 400ms ease-in-out;
+        }
+        /* 背面层样式 */
+        .card-back {
+            background-color: black;
+            border-color: #FF6D00;
+        }
+        /* 字面层样式 */
+        .card-front {
+            background-color: #FFBB89;
+            border-color: #333;
+            /* 沿y轴旋转180度 */
+            transform: rotateY(180deg);
+        }
+         
+ 
+        /* 背面层 内容样式 */
+        .cobweb {
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            transition: width 100ms ease-in-out, height 100ms ease-in-out;
+        }
+        .card-face:hover .cobweb{
+            width: 55px;
+            height: 55px;
+        }
+ 
+        .cobweb-top-left {
+            top: 0;
+            left: 0;
+            transform: rotate(270deg);
+        }
+        .cobweb-top-right {
+            top: 0;
+            right: 0;
+        }
+        .cobweb-bottom-left {
+            bottom: 0;
+            left: 0;
+            /* 没有指定xyz轴就是啊在当前平面旋转180度 */
+            transform: rotate(180deg);
+        }
+        .cobweb-bottom-right {
+            bottom: 0;
+            right: 0;
+            transform: rotate(90deg);
+        }
+
+        .spider {
+            /* align-self 属性定义 flex子项单独在侧轴（纵轴）方向上的对齐方式。
+             注意：align-self 属性可重写灵活容器的 align-items 属性。这个只管这个属性自生的排布 */
+            align-self: flex-start;
+            /* 沿y轴向左平移20个像素 */
+            transform: translateY(-20px);
+            transition: transform 100ms ease-in-out;
+        }
+        /* 鼠标放在背面上 蜘蛛的样式 */
+        .card-back:hover .spider {
+            transform: translateY(0);
+        }
+        .card::before,.card::after{
+            content: attr(data-value);
+            font-size: 2rem;
+            position: absolute;
+        }
+        .card::before{
+            top: .1rem;
+            left: .1rem;
+        }
+        .card::after{
+            bottom: .1rem;
+            right: .1rem;
+            transform: rotate(180deg);
+        }
+        .card.red{
+            color: red;
+            display: flex;
+            justify-content: center;
+            /* 这里是所有子项元素的排布 */
+            align-items: center;
+            /* 这个样式是防止用户选中文字的干扰 */
+            user-select: none; 
+        }
+        .card.black{
+            color: black;
+            display: flex;
+            justify-content: center;
+            /* 这里是所有子项元素的排布 */
+            align-items: center;
+            user-select: none; 
+        }
+        .start{
+            display: flex;
+            justify-content: center;
+            /* 这里是所有子项元素的排布 */
+            align-items: center;
+            font-size: 3.5rem;
+            user-select: none; 
+        }
+        .set{
+            display: flex;
+            justify-content: center;
+            /* 这里是所有子项元素的排布 */
+            align-items: center;
+            font-size: 3rem; 
+            user-select: none; 
+        }
+
+        .level{
+            width: 190px;
+            height: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 可选的阴影效果 */
+            position: fixed; /* 使用fixed定位，使div始终保持在视口内 */
+            top: 50%; /* 将div的顶部边缘对齐到视口的中部 */
+            left: 50%; /* 将div的左侧边缘对齐到视口的中部 */
+            transform: translate(-50%, -50%); /* 使用transform属性将div的中心点对齐到视口的中心点 */
+            z-index: 9999; /* 确保div位于其他内容之上 */
+            /* display: flex; */
+            /* ‌justify-content: space-between‌ 是Flexbox布局中用于控制主轴上项目间距的属性之一。其主要特点是两端对齐，即第一个和最后一个项目分别与容器的起始和结束边缘对齐，而中间的项目则均匀分布，使得项目之间的间距相等。
+            ‌两端对齐‌：第一个项目与容器的起始边缘对齐，最后一个项目与容器的结束边缘对齐。
+            ‌均匀分布‌：中间的项目会均匀分布，使得项目之间的间距相等。
+            ‌无边缘间距‌：第一个项目前面和最后一个项目后面没有空间。 */
+            justify-content: space-between;
+            /* 这里是所有子项元素的排布 */
+            /* align-items: center; */
+            /* 纵向排列 */
+            flex-direction: column;
+            display: none;
+        }
+        .child {        
+        width: 100%; /* 子元素宽度占满父元素宽度 */
+        height: 33.33333333%; /* 子元素高度为100px */
+        border: solid 1px black;
+        text-align: center;
+        font-size: 4em;
+        background: radial-gradient(#f15f66, #7e2625);
+        user-select: none; 
+        }
